@@ -91,7 +91,7 @@ where
     stream: ClonableStream<S>,
     buf_reader: BufReader<ClonableStream<S>>,
 
-    headers: VecDeque<HeaderNotification>,
+    headers: VecDeque<HeaderNotificationRaw>,
     script_notifications: BTreeMap<ScriptHash, VecDeque<ScriptStatus>>,
 
     #[cfg(feature = "debug-calls")]
@@ -387,9 +387,16 @@ impl<S: Read + Write> Client<S> {
         Ok(serde_json::from_value(value)?)
     }
 
-    /// Tries to pop one queued notification for a new block header that we might have received.
-    /// Returns `None` if there are no items in the queue.
-    pub fn block_headers_poll(&mut self) -> Result<Option<HeaderNotification>, Error> {
+    /// Subscribes to notifications for new block headers, by sending a `blockchain.headers.subscribe` call.
+    pub fn block_headers_subscribe_raw(&mut self) -> Result<HeaderNotificationRaw, Error> {
+        let req = Request::new("blockchain.headers.subscribe", vec![]);
+        let value = self.call(req)?;
+
+        Ok(serde_json::from_value(value)?)
+    }
+
+
+    pub fn block_headers_poll_raw(&mut self) -> Result<Option<HeaderNotificationRaw>, Error> {
         self.poll()?;
 
         Ok(self.headers.pop_front())

@@ -181,9 +181,9 @@ pub struct GetHeadersRes {
 #[derive(Debug, Deserialize)]
 pub struct GetBalanceRes {
     /// Confirmed balance in Satoshis for the address.
-    pub confirmed: u64,
+    pub confirmed: Option<u64>,
     /// Unconfirmed balance in Satoshis for the address.
-    pub unconfirmed: u64,
+    pub unconfirmed: Option<u64>,
 }
 
 /// Response to a [`transaction_get_merkle`](../client/struct.Client.html#method.transaction_get_merkle) request.
@@ -206,6 +206,16 @@ pub struct HeaderNotification {
     /// Newly added header.
     #[serde(rename = "hex", deserialize_with = "from_hex_header")]
     pub header: block::BlockHeader,
+}
+
+
+/// Notification of a new block header
+#[derive(Debug, Deserialize)]
+pub struct HeaderNotificationRaw {
+    /// New block height.
+    pub height: usize,
+    /// Newly added header.
+    pub hex: String,
 }
 
 /// Notification of the new status of a script
