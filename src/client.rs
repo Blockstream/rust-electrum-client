@@ -425,6 +425,7 @@ impl<S: Read + Write> Client<S> {
         start_height: usize,
         count: usize,
     ) -> Result<GetHeadersRes, Error> {
+
         let req = Request::new(
             "blockchain.block.headers",
             vec![Param::Usize(start_height), Param::Usize(count)],

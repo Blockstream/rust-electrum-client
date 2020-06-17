@@ -24,6 +24,7 @@ log = "^0.4"
 bitcoin = { version = "0.23", features = ["use-serde"] }
 serde = { version = "^1.0", features = ["derive"] }
 serde_json = { version = "^1.0" }
+hex = "0.4.2"
 
 # Optional dependencies
 socks = { version = "^0.3", optional = true }

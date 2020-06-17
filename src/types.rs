@@ -11,7 +11,7 @@ use serde::{de, Deserialize, Serialize};
 
 static JSONRPC_2_0: &str = "2.0";
 
-#[derive(Serialize, Clone)]
+#[derive(Serialize, Clone, Debug)]
 #[serde(untagged)]
 /// A single parameter of a [`Request`](struct.Request.html)
 pub enum Param {
@@ -25,7 +25,7 @@ pub enum Param {
     Bool(bool),
 }
 
-#[derive(Serialize, Clone)]
+#[derive(Serialize, Clone, Debug)]
 /// A request that can be sent to the server
 pub struct Request<'a> {
     jsonrpc: &'static str,
@@ -187,7 +187,7 @@ pub struct GetBalanceRes {
 }
 
 /// Response to a [`transaction_get_merkle`](../client/struct.Client.html#method.transaction_get_merkle) request.
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Serialize)]
 pub struct GetMerkleRes {
     /// Height of the block that confirmed the transaction
     pub block_height: usize,
