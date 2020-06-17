@@ -703,6 +703,18 @@ impl<S: Read + Write> Client<S> {
         Ok(serde_json::from_value(result)?)
     }
 
+    /// Announce a server to get it listed in the peer list.
+    pub fn server_add_peer<T>(&mut self, features: &T) -> Result<bool, Error>
+    where
+        T: serde::Serialize,
+    {
+        let json = serde_json::to_value(features)?;
+        let req = Request::new("server.add_peer", vec![Param::Json(json)]);
+        let value = self.call(req)?;
+
+        Ok(serde_json::from_value(value)?)
+    }
+
     #[cfg(feature = "debug-calls")]
     /// Returns the number of network calls made since the creation of the client.
     pub fn calls_made(&self) -> usize {

@@ -23,6 +23,8 @@ pub enum Param {
     String(String),
     /// Boolean parameter
     Bool(bool),
+    /// JSON parameter
+    Json(serde_json::Value),
 }
 
 #[derive(Serialize, Clone)]
