@@ -399,7 +399,13 @@ impl<S: Read + Write> RawClient<S> {
 
         self.increment_calls();
 
-        let mut resp = self.recv(&receiver, req.id)?;
+        let mut resp = match self.recv(&receiver, req.id) {
+            Ok(resp) => resp,
+            e @ Err(_) => {
+                self.waiting_map.lock().unwrap().remove(&req.id);
+                return e;
+            }
+        };
         Ok(resp["result"].take())
     }
 
