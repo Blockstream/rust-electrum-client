@@ -343,11 +343,10 @@ impl<S: Read + Write> RawClient<S> {
                             trace!("Reader thread received response for {}", resp_id);
 
                             let mut map = self.waiting_map.lock().unwrap();
-                            if let Some(sender) = map.get(&resp_id) {
+                            if let Some(sender) = map.remove(&resp_id) {
                                 sender
                                     .send(ChannelMessage::Response(resp))
                                     .expect("Unable to send the response");
-                                map.remove(&resp_id);
                             } else {
                                 warn!("Missing listener for {}", resp_id);
                             }
