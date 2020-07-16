@@ -13,6 +13,9 @@ pub trait ElectrumApi {
     /// Subscribes to notifications for new block headers, by sending a `blockchain.headers.subscribe` call.
     fn block_headers_subscribe(&self) -> Result<HeaderNotification, Error>;
 
+    /// Subscribes to notifications for new block headers in raw format (hex string), by sending a `blockchain.headers.subscribe` call.
+    fn block_headers_subscribe_raw(&self) -> Result<HeaderNotificationRaw, Error>;
+
     /// Tries to pop one queued notification for a new block header that we might have received.
     /// Returns `None` if there are no items in the queue.
     fn block_headers_pop(&self) -> Result<Option<HeaderNotification>, Error>;

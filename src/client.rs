@@ -83,6 +83,11 @@ impl ElectrumApi for Client {
     }
 
     #[inline]
+    fn block_headers_subscribe_raw(&self) -> Result<HeaderNotificationRaw, Error> {
+        impl_inner_call!(self, block_headers_subscribe_raw)
+    }
+
+    #[inline]
     fn block_headers_pop(&self) -> Result<Option<HeaderNotification>, Error> {
         impl_inner_call!(self, block_headers_pop)
     }

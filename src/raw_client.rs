@@ -529,6 +529,17 @@ impl<T: Read + Write> ElectrumApi for RawClient<T> {
         Ok(serde_json::from_value(value)?)
     }
 
+    fn block_headers_subscribe_raw(&self) -> Result<HeaderNotificationRaw, Error> {
+        let req = Request::new_id(
+            self.last_id.fetch_add(1, Ordering::SeqCst),
+            "blockchain.headers.subscribe",
+            vec![],
+        );
+        let value = self.call(req)?;
+
+        Ok(serde_json::from_value(value)?)
+    }
+
     fn block_headers_pop(&self) -> Result<Option<HeaderNotification>, Error> {
         Ok(self.headers.lock().unwrap().pop_front())
     }

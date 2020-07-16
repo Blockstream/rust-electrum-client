@@ -221,6 +221,15 @@ pub struct GetMerkleRes {
     pub merkle: Vec<[u8; 32]>,
 }
 
+/// Notification of a new block header in raw format
+#[derive(Debug, Deserialize)]
+pub struct HeaderNotificationRaw {
+    /// New block height.
+    pub height: usize,
+    /// Newly added header.
+    pub hex: String,
+}
+
 /// Notification of a new block header
 #[derive(Debug, Deserialize)]
 pub struct HeaderNotification {
