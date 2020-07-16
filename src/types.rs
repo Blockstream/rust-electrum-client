@@ -201,7 +201,8 @@ pub struct GetHeadersRes {
 }
 
 /// Response to a [`script_get_balance`](../client/struct.Client.html#method.script_get_balance) request.
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Default)]
+#[serde(default)]
 pub struct GetBalanceRes {
     /// Confirmed balance in Satoshis for the address.
     pub confirmed: u64,
